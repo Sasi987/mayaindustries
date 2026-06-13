@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import logo from "../assets/logo-removebg-preview (1).png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -55,6 +56,7 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="logo">
+        <img src={logo} alt="Maya Industries logo" className="brand-logo" />
         <h2>MAYA INDUSTRIES</h2>
       </div>
 
