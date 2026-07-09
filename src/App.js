@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -13,6 +14,9 @@ import { siteConfig } from "./seo/seoConfig";
 import './App.css';
 
 function App() {
+  const [theme, setTheme] = useState("dark");
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -34,20 +38,39 @@ function App() {
     priceRange: '₹₹'
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
+      setScrollProgress(progress);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
-    <Seo page="home" canonical="https://www.maya-industries.com/" schema={localBusinessSchema}>
-      <div>
-        <Navbar />
-        <Hero />
-        <About />
-        <Quality />
-        <Machines />
-        <Customers />
-        <Gallery />
-        <Contact />
-        <Footer />
-      </div>
-    </Seo>
+    <div className={`app-shell ${theme}`}>
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
+      <Seo page="home" canonical="https://www.maya-industries.com/" schema={localBusinessSchema}>
+        <div className="page-shell">
+          <Navbar theme={theme} toggleTheme={toggleTheme} />
+          <Hero />
+          <About />
+          <Quality />
+          <Machines />
+          <Customers />
+          <Gallery />
+          <Contact />
+          <Footer />
+        </div>
+      </Seo>
+    </div>
   );
 }
 
