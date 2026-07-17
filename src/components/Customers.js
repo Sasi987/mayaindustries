@@ -22,7 +22,7 @@ const Customers = () => {
   return (
     <section className="customers-section" id="customers" aria-labelledby="customers-title">
       <div className="customers-header">
-        <span>Our Customers</span>
+       
         <h2 id="customers-title">Partners across precision-driven industries.</h2>
         <p>We build lasting relationships through dependable quality, responsive communication, and a clear commitment to execution.</p>
       </div>
